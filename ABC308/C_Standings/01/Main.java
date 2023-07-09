@@ -15,48 +15,38 @@ public class Main {
         }
         scanner.close();
 
-        // ===== MAPに詰め替え =====
+        // ===== クラスに詰め替え =====
         var list = new ArrayList<Record>();
         for (var i = 0; i < N; i++) {
-            var front = AList.get(i);
-            var back  = BList.get(i);
-            var rate = Double.valueOf((double)front / (front + back));
-
-            // System.out.println("===============");
-            // System.out.println("front:" + front);
-            // System.out.println("back:" + back);
-            // System.out.println("rate:" + rate);
-
-            var record = new Record(i, front, back, rate);
-            list.add(record);
-            // System.out.println(":" + i + ":" +record.getA() + ":" + record.getB() + ":" + record.getR());
+            list.add(new Record(i, AList.get(i), BList.get(i)));
         }
         
+        // ===== ソート =====
         Collections.sort(list, (record1, record2) -> {
             Long rate1 = record1.getA() * (record2.getA() + record2.getB());
             Long rate2 = record2.getA() * (record1.getA() + record1.getB());
-            // System.out.println("rate1:" + rate1);
-            // System.out.println("rate2:" + rate2);
             return rate2.compareTo(rate1);
         });
 
+        // ===== 結果生成 =====
+        var resultList = new ArrayList<String>();
         for (var record : list) {
-            System.out.println((record.getNo() + 1) + " ");
+            resultList.add(String.valueOf(record.getNo() + 1));
         }
 
+        // ===== 結果出力 =====
+        System.out.println(String.join(" ", resultList));
     }
    
     public static class Record {
         private Integer no;
         private Long a;
         private Long b;
-        private Double r;
 
-        public Record(Integer no, Long a, Long b, Double r) {
+        public Record(Integer no, Long a, Long b) {
             this.no = no;
             this.a = a;
             this.b = b;
-            this.r = r;
         }
 
         public void setNo(Integer no) {
@@ -81,14 +71,6 @@ public class Main {
 
         public Long getB() {
             return this.b;
-        }
-
-        public void setR(Double r) {
-            this.r = r;
-        }
-
-        public Double getR() {
-            return this.r;
         }
     }    
 }
