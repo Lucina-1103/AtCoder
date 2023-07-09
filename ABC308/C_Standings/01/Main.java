@@ -1,7 +1,5 @@
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -9,66 +7,88 @@ public class Main {
         // ===== 入力値の読取 =====
         Scanner scanner = new Scanner(System.in);
         var N = scanner.nextInt(); // コイントスをした人の数
-        var AList = new ArrayList<Integer>();
-        var BList = new ArrayList<Integer>();
+        var AList = new ArrayList<Long>();
+        var BList = new ArrayList<Long>();
         for (var i = 0; i < N; i++) {
-            AList.add(scanner.nextInt()); // 表の回数のリスト
-            BList.add(scanner.nextInt()); // 裏の回数のリスト
+            AList.add(Long.parseLong(scanner.next())); // 表の回数のリスト
+            BList.add(Long.parseLong(scanner.next())); // 裏の回数のリスト
         }
+        scanner.close();
 
-        // ===== 表の確率算出 =====
-        var rateList = new ArrayList<Double>();
+        // ===== MAPに詰め替え =====
+        var list = new ArrayList<Record>();
         for (var i = 0; i < N; i++) {
-            var front = Double.valueOf(AList.get(i));
-            var back  = Double.valueOf(BList.get(i));
-            // rateList.add(front / (front + back));
-            rateList.add(front / (front + back));
+            var front = AList.get(i);
+            var back  = BList.get(i);
+            var rate = Double.valueOf((double)front / (front + back));
+
+            // System.out.println("===============");
+            // System.out.println("front:" + front);
+            // System.out.println("back:" + back);
+            // System.out.println("rate:" + rate);
+
+            var record = new Record(i, front, back, rate);
+            list.add(record);
+            // System.out.println(":" + i + ":" +record.getA() + ":" + record.getB() + ":" + record.getR());
         }
-        // System.out.println(rateList);
+        
+        Collections.sort(list, (record1, record2) -> {
+            Long rate1 = record1.getA() * (record2.getA() + record2.getB());
+            Long rate2 = record2.getA() * (record1.getA() + record1.getB());
+            // System.out.println("rate1:" + rate1);
+            // System.out.println("rate2:" + rate2);
+            return rate2.compareTo(rate1);
+        });
 
-        // ===== 出力値の生成 =====
-        // MAPに詰め替え
-        var map = new HashMap<Integer, Double>();
-        for (var i = 0; i < rateList.size(); i++) {
-            map.put(i, rateList.get(i));
+        for (var record : list) {
+            System.out.println((record.getNo() + 1) + " ");
         }
 
-        // MAPのvalueで昇順ソート
-        /* 
-        // var mapValueList = map.values();
-        Arrays.sort((Collection<double>)mapValueList);
+    }
+   
+    public static class Record {
+        private Integer no;
+        private Long a;
+        private Long b;
+        private Double r;
 
-        var resultList = new ArrayList<String>();
-        var maxRate = BigDecimal.ZERO;
-        var limitRate = BigDecimal.ZERO;
-        var maxIndex = 0;
-        var limitIndex = 0;
-
-        for (var i = 0; i < N; i++) {
-            for (var j = 0; j < rateList.size(); j++) {
-                System.out.println("debug:" + maxRate);
-                System.out.println("debug:" + rateList.get(j));
-                if (limitRate.compareTo(rateList.get(j)) > 0) {
-                    continue;
-                }
-                if (limitRate.compareTo(rateList.get(j)) == 0 && limitIndex == j) {
-                    continue;
-                }
-                if (maxRate.compareTo(rateList.get(j)) < 0) {
-                    maxRate = rateList.get(j);
-                    maxIndex = j;
-                }
-            }
-            resultList.add(String.valueOf(maxIndex));
-            limitRate = rateList.get(maxIndex);
-            limitIndex = maxIndex;
+        public Record(Integer no, Long a, Long b, Double r) {
+            this.no = no;
+            this.a = a;
+            this.b = b;
+            this.r = r;
         }
-        */
 
-        // ===== 値の出力 =====
-        // System.out.println(String.join(" ", resultList));
-   }
+        public void setNo(Integer no) {
+            this.no = no;
+        }
+
+        public Integer getNo() {
+            return this.no;
+        }
+
+        public void setA(Long a) {
+            this.a = a;
+        }
+
+        public Long getA() {
+            return this.a;
+        }
+
+        public void setB(Long b) {
+            this.b = b;
+        }
+
+        public Long getB() {
+            return this.b;
+        }
+
+        public void setR(Double r) {
+            this.r = r;
+        }
+
+        public Double getR() {
+            return this.r;
+        }
+    }    
 }
-
- 0     1     2
-[0.25, 0.75, 0.5]
