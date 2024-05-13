@@ -1,5 +1,5 @@
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -10,27 +10,31 @@ public class Main {
         scanner.close();
 
         // ===== 集計処理 =====
-        Map<String, Integer> map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new HashMap<>();
         for (int i = 0; i < charArray.length; i++) {
-            if (map.containsKey(String.valueOf(charArray[i]))) {
-                map.replace(String.valueOf(charArray[i]), map.get(String.valueOf(charArray[i])) + 1);
+            var str = String.valueOf(charArray[i]);
+            if (map.containsKey(str)) {
+                map.replace(str, map.get(str) + 1);
             } else {
-                map.put(String.valueOf(charArray[i]), 1);
+                map.put(str, 1);
             }
         }
 
         // ===== 判定処理 =====
         var result = "Yes";
-        if (map.size() == 2) {
-            for (var count : map.values()) {
-                if (count != 2) {
-                    result = "No";
-                }
-            }
-        } else {
+        // mapのサイズが2ではない場合はNo
+        if (map.size() != 2) {
             result = "No";
+            System.out.println(result);
+            return;
         }
-
+        // それぞれの文字種が2つ出現していない場合はNo
+        for (var count : map.values()) {
+            if (count != 2) {
+                result = "No";
+                break;
+            }
+        }
         System.out.println(result);
     }
 }
