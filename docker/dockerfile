@@ -1,0 +1,4 @@
+FROM openjdk:21-slim-bullseye
+
+RUN apt-get update
+WORKDIR /opt/src
