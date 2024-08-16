@@ -1,0 +1,8 @@
+services:
+  c-sharp:
+    build: ./docker
+    ports:
+      - 8080:8080
+    tty: true
+    volumes:
+      - ./src:/opt/src:cached
