@@ -1,15 +1,6 @@
 ﻿using System;
 
-namespace AtCoder
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            int h1 = int.Parse(Console.ReadLine());
-            int h2 = int.Parse(Console.ReadLine());
+int h1 = int.Parse(Console.ReadLine()!);
+int h2 = int.Parse(Console.ReadLine()!);
 
-            Console.WriteLine(h1 - h2);
-        }
-    }
-}
+Console.WriteLine(h1 - h2);
