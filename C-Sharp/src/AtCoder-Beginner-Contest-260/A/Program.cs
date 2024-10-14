@@ -1,60 +1,33 @@
 ﻿using System;
 
+var str = Console.ReadLine()!.ToCharArray();;
 
-// namespace AtCoder
-// {
-//     class Program
-//     {
-//        static void Main(string[] args)
-//        {
-            var str = Console.ReadLine()!.toCharArray();
-            Console.WriteLine(str + "が入力されました");
+var dictionary = new Dictionary<char, int>();
 
-            var dictionary = new Dictionary<String, int>();
-            foreach (String letter in str.Split(""))
-            {
-                Console.WriteLine(letter + "を処理します");
+for (int i = 0; i < str.Length; i++)
+{
+    if (dictionary.ContainsKey(str[i]))
+    {
+        dictionary[str[i]]++;
+    }
+    else
+    {
+        dictionary.Add(str[i], 1);
+    }
+}
 
-                if (dictionary.ContainsKey(letter))
-                {
-                    Console.WriteLine("true");
-                }
-                else
-                {
-                    Console.WriteLine("false");
-                }
-            }
-            //{
-            //    Console.WriteLine(letter);    
-            //    if (dictionary.ContainsKey(letter))
-            //    {
-            //        Console.WriteLine(true);    
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine(false);    
-            //    }  
-            //}
+var onceFlg = false;
+foreach (char letter in dictionary.Keys)
+{
+    if (dictionary[letter] == 1)
+    {
+        Console.WriteLine(letter);
+        onceFlg = true;
+        break;
+    }
+}
 
-//            foreach (var letter in chars)
-//            {
-//                if (map.ConstainsKey(i))
-//                {
-//                    map.add(i, map[i].Value + 1);
-//                }
-//            }
-
-//            var result = -1;
-//            var result2 = "";
-//            foreach (var j in map)
-//            {
-//                if (j.Value == 1)
-//                {
-//                    result = 1;
-//                    result2 = j.Key;
-//                    break;
-//                }
-//            }
-//        }
-//    }
-// }
+if (!onceFlg)
+{
+    Console.WriteLine(-1);
+}
