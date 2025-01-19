@@ -2,21 +2,37 @@
 
 C#
 
-## １、ファイル登録方法
+## １、ファイル登録する
 問題毎のフォルダにて以下のコマンドを実行します。
 ```
-dotnet new
-```
-もしくは、他のプロジェクトフォルダからフォルダ一式をコピーします。
+# cd /opt/src/AtCoder-Beginner-Contest-001/A
+# pwd
+/opt/src/AtCoder-Beginner-Contest-001/A
 
-## ２、コンパイル（ビルド）方法
-問題毎のフォルダにて以下のコマンドを実行します。
-```
-dotnet build
+# dotnet new console
 ```
 
-## ３、実行方法
+## ２、ソリューションへプロジェクトを追加する
+```
+# cd /opt/src
+# pwd
+/opt/src
+
+# dotnet sln add ./AtCoder-Beginner-Contest-001/
+```
+
+## ３、コンパイル（ビルド）方法
 問題毎のフォルダにて以下のコマンドを実行します。
 ```
-dotnet run
+# cd /opt/src/AtCoder-Beginner-Contest-001/A
+# pwd
+/opt/src/AtCoder-Beginner-Contest-001/A
+
+# dotnet build
+```
+
+## ４、実行方法
+問題毎のフォルダにて以下のコマンドを実行します。
+```
+# dotnet run
 ```
